@@ -85,7 +85,7 @@ export default function ChatbotTab() {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: '24px', flexGrow: 1, minHeight: 0 }}>
+      <div className="responsive-chat-grid">
         {/* Chat Area */}
         <div className="glass-panel chat-window" style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', maxWidth: 'none', margin: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '16px 20px', borderBottom: '1px solid var(--border-color)', background: 'rgba(0, 242, 254, 0.02)' }}>

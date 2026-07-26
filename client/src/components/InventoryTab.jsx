@@ -212,7 +212,7 @@ export default function InventoryTab() {
         </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '24px', alignItems: 'start' }}>
+      <div className="responsive-split-grid">
         {/* Left Side: Product Table */}
         <div className="glass-panel table-panel">
           <div className="table-header-row">
@@ -367,7 +367,7 @@ export default function InventoryTab() {
 
               {/* Outputs Summary */}
               {calcDetails && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+                <div className="responsive-card-grid">
                   <div className="glass-panel" style={{ padding: '14px', background: 'rgba(0, 242, 254, 0.03)', border: '1px solid rgba(0, 242, 254, 0.12)' }}>
                     <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>Economic Order Qty (EOQ)</div>
                     <div style={{ fontSize: '20px', fontWeight: 800, color: 'var(--color-cyan)', fontFamily: 'var(--font-heading)', marginTop: '4px' }}>

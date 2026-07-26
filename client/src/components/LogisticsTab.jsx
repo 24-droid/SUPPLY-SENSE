@@ -134,7 +134,7 @@ export default function LogisticsTab({ liveOrders = [], isConnected = false }) {
         </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '24px', alignItems: 'start' }}>
+      <div className="responsive-split-grid">
         {/* Left Side: Shipments List */}
         <div className="glass-panel" style={{ padding: '24px' }}>
           <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>

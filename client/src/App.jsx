@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, TrendingUp, Truck, Sparkles, Home } from 'lucide-react';
+import { LayoutDashboard, Package, TrendingUp, Truck, Sparkles, Home, Menu, X } from 'lucide-react';
 import { useSocket } from './hooks/useSocket';
 import OverviewTab from './components/OverviewTab';
 import InventoryTab from './components/InventoryTab';
@@ -11,7 +11,13 @@ import LandingPage from './components/LandingPage';
 
 function DashboardLayout({ isConnected, liveAlerts, liveOrders, stockUpdates, kpiDelta }) {
   const [activeTab, setActiveTab] = useState('overview');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+
+  const handleTabChange = (tabName) => {
+    setActiveTab(tabName);
+    setIsMenuOpen(false); // Close menu on selection
+  };
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -33,7 +39,7 @@ function DashboardLayout({ isConnected, liveAlerts, liveOrders, stockUpdates, kp
   return (
     <div className="app-container fade-in-up">
       {/* Sidebar Navigation */}
-      <aside className="sidebar">
+      <aside className={`sidebar ${isMenuOpen ? 'menu-open' : ''}`}>
         {/* Click logo to go back to Landing Page */}
         <div 
           className="logo-container" 
@@ -46,45 +52,51 @@ function DashboardLayout({ isConnected, liveAlerts, liveOrders, stockUpdates, kp
           <h1 className="logo-text">SupplySense</h1>
         </div>
 
+        {/* Mobile menu toggle */}
+        <button className="mobile-nav-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+
         <nav>
           <ul className="nav-links">
             <li
               className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`}
-              onClick={() => setActiveTab('overview')}
+              onClick={() => handleTabChange('overview')}
             >
               <LayoutDashboard size={18} />
               <span>Overview</span>
             </li>
             <li
               className={`nav-item ${activeTab === 'inventory' ? 'active' : ''}`}
-              onClick={() => setActiveTab('inventory')}
+              onClick={() => handleTabChange('inventory')}
             >
               <Package size={18} />
               <span>Inventory Optimization</span>
             </li>
             <li
               className={`nav-item ${activeTab === 'demand' ? 'active' : ''}`}
-              onClick={() => setActiveTab('demand')}
+              onClick={() => handleTabChange('demand')}
             >
               <TrendingUp size={18} />
               <span>Demand Prediction</span>
             </li>
             <li
               className={`nav-item ${activeTab === 'logistics' ? 'active' : ''}`}
-              onClick={() => setActiveTab('logistics')}
+              onClick={() => handleTabChange('logistics')}
             >
               <Truck size={18} />
               <span>Logistics & Suppliers</span>
             </li>
             <li
               className={`nav-item ${activeTab === 'chatbot' ? 'active' : ''}`}
-              onClick={() => setActiveTab('chatbot')}
+              onClick={() => handleTabChange('chatbot')}
             >
               <Sparkles size={18} />
               <span>SupplyAI Assistant</span>
             </li>
           </ul>
         </nav>
+
 
         <footer className="sidebar-footer">
           {/* Quick link back to landing page */}

@@ -953,3 +953,241 @@ select:focus, input[type="text"]:focus {
   100% { filter: drop-shadow(0 0 10px rgba(0,242,254,0.7)); }
 }
 
+/* Responsive Grid Layout Helper Classes */
+.responsive-split-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.responsive-demand-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+.responsive-chat-grid {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+.responsive-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1024px) {
+  .responsive-split-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  .responsive-demand-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  .responsive-chat-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .responsive-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   Responsive Breakpoints & Media Queries
+   ========================================================================== */
+
+/* Mobile Navigation Toggle Button */
+.mobile-nav-toggle {
+  display: none;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.mobile-nav-toggle:hover {
+  background: rgba(0, 242, 254, 0.08);
+  border-color: var(--color-cyan);
+}
+
+/* Tablet & Smaller Screens (Layout & Navigation) */
+@media (max-width: 992px) {
+  .app-container {
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px 24px;
+    height: auto;
+    position: sticky;
+    top: 0;
+    background: var(--bg-sidebar);
+    z-index: 100;
+  }
+
+  .logo-container {
+    margin-bottom: 0 !important;
+  }
+
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
+  /* Dropdown Menu on Mobile when toggle clicked */
+  .sidebar nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg-sidebar);
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    display: none;
+    transform-origin: top;
+    animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .sidebar.menu-open nav {
+    display: block;
+  }
+
+  .sidebar-footer {
+    display: none !important; /* Hide footer in top bar layout on mobile */
+  }
+
+  .main-content {
+    max-height: none;
+    padding: 24px 16px;
+    overflow-y: visible;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Medium Tablets & Laptops (Grids & Charts) */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  /* Logistics view split grid */
+  .landing-hero-split {
+    grid-template-columns: 1fr !important;
+    gap: 30px;
+  }
+
+  .landing-hero-left {
+    text-align: center;
+  }
+
+  .landing-subtitle {
+    margin: 0 auto 30px !important;
+    text-align: center !important;
+  }
+
+  .landing-hero-right {
+    height: 350px;
+  }
+
+  .landing-features-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px;
+  }
+  
+  /* Logistics layout grid */
+  div[style*="gridTemplateColumns: '1.2fr 1fr'"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  
+  div[style*="grid-template-columns: 1.2fr 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}
+
+/* Mobile Devices (KPIs, Forms, Charts) */
+@media (max-width: 640px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .page-header button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .landing-title {
+    font-size: 34px !important;
+    line-height: 1.25;
+  }
+
+  .landing-features-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .landing-stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+    width: 100%;
+  }
+
+  .landing-stat-value {
+    font-size: 26px !important;
+  }
+
+  /* Adjust inventory calculator grid spacing */
+  .grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  /* Chat message limits on small mobile */
+  .chat-message {
+    max-width: 90% !important;
+  }
+}
+
+

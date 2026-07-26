@@ -227,7 +227,7 @@ export default function DemandTab() {
         </div>
       </div>
 
-      <div className="charts-grid" style={{ gridTemplateColumns: '1fr 340px' }}>
+      <div className="responsive-demand-grid">
         {/* Left Side: Prediction Line Chart */}
         <div className="glass-panel chart-container" style={{ minHeight: '480px', display: 'flex', flexDirection: 'column' }}>
           <div className="table-header-row" style={{ marginBottom: '20px' }}>
