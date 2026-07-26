@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, Package, TrendingUp, Truck, Sparkles } from 'lucide-react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { LayoutDashboard, Package, TrendingUp, Truck, Sparkles, Home } from 'lucide-react';
 import { useSocket } from './hooks/useSocket';
 import OverviewTab from './components/OverviewTab';
 import InventoryTab from './components/InventoryTab';
 import DemandTab from './components/DemandTab';
 import LogisticsTab from './components/LogisticsTab';
 import ChatbotTab from './components/ChatbotTab';
+import LandingPage from './components/LandingPage';
 
-export default function App() {
+function DashboardLayout({ isConnected, liveAlerts, liveOrders, stockUpdates, kpiDelta }) {
   const [activeTab, setActiveTab] = useState('overview');
-
-  // Global real-time socket connection — feeds live data to all tabs
-  const { isConnected, liveAlerts, liveOrders, stockUpdates, kpiDelta } = useSocket();
+  const navigate = useNavigate();
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -31,10 +31,17 @@ export default function App() {
   };
 
   return (
-    <div className="app-container">
+    <div className="app-container fade-in-up">
       {/* Sidebar Navigation */}
       <aside className="sidebar">
-        <div className="logo-container">
+        {/* Click logo to go back to Landing Page */}
+        <div 
+          className="logo-container" 
+          onClick={() => navigate('/')} 
+          style={{ cursor: 'pointer', transition: 'opacity 0.2s' }}
+          onMouseEnter={(e) => e.currentTarget.style.opacity = 0.8}
+          onMouseLeave={(e) => e.currentTarget.style.opacity = 1}
+        >
           <div className="logo-icon">S</div>
           <h1 className="logo-text">SupplySense</h1>
         </div>
@@ -80,6 +87,22 @@ export default function App() {
         </nav>
 
         <footer className="sidebar-footer">
+          {/* Quick link back to landing page */}
+          <div 
+            onClick={() => navigate('/')}
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '6px', 
+              marginBottom: '12px', 
+              color: 'var(--text-secondary)',
+              cursor: 'pointer'
+            }}
+          >
+            <Home size={12} />
+            <span style={{ fontSize: '11px', textDecoration: 'underline' }}>Back to Home Screen</span>
+          </div>
+
           {/* Live connection status indicator */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
             <div style={{
@@ -111,5 +134,30 @@ export default function App() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function App() {
+  const navigate = useNavigate();
+
+  // Global real-time socket connection — feeds live data to all tabs
+  const { isConnected, liveAlerts, liveOrders, stockUpdates, kpiDelta } = useSocket();
+
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage onLaunch={() => navigate('/dashboard')} />} />
+      <Route 
+        path="/dashboard" 
+        element={
+          <DashboardLayout 
+            isConnected={isConnected} 
+            liveAlerts={liveAlerts} 
+            liveOrders={liveOrders} 
+            stockUpdates={stockUpdates} 
+            kpiDelta={kpiDelta} 
+          />
+        } 
+      />
+    </Routes>
   );
 }

@@ -184,6 +184,9 @@ export default function LogisticsTab({ liveOrders = [], isConnected = false }) {
                 </div>
               </div>
             ))}
+
+            {/* Static historical shipments from database */}
+            {logisticsData && logisticsData.shipments.slice(0, 15).map((s) => (
               <div 
                 key={s.orderItemId} 
                 className="glass-panel" 
@@ -204,7 +207,7 @@ export default function LogisticsTab({ liveOrders = [], isConnected = false }) {
                 </div>
 
                 <h4 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>{s.productName}</h4>
-
+                
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', fontSize: '12px', color: 'var(--text-secondary)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <MapPin size={12} /> {s.destination}
@@ -219,7 +222,7 @@ export default function LogisticsTab({ liveOrders = [], isConnected = false }) {
                     Mode: <span style={{ color: '#fff', fontWeight: 500 }}>{s.shippingMode}</span>
                   </div>
                   <div>
-                    Scheduled: <span style={{ color: '#fff', fontWeight: 500 }}>{s.scheduledDays}d</span> |
+                    Scheduled: <span style={{ color: '#fff', fontWeight: 500 }}>{s.scheduledDays}d</span> | 
                     Actual: <span style={{ color: s.lateRisk ? 'var(--color-rose)' : 'var(--color-emerald)', fontWeight: 600 }}> {s.realDays}d</span>
                   </div>
                 </div>
