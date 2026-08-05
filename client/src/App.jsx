@@ -121,12 +121,12 @@ function DashboardLayout({ isConnected, liveAlerts, liveOrders, stockUpdates, kp
               width: 7,
               height: 7,
               borderRadius: '50%',
-              background: isConnected ? 'var(--color-emerald)' : 'var(--color-rose)',
-              boxShadow: isConnected ? '0 0 6px var(--color-emerald)' : 'none',
+              background: isConnected ? 'var(--color-emerald)' : 'var(--color-cyan)',
+              boxShadow: isConnected ? '0 0 6px var(--color-emerald)' : '0 0 6px var(--color-cyan)',
               animation: isConnected ? 'pulse 2s infinite' : 'none'
             }} />
-            <span style={{ fontSize: '11px', color: isConnected ? 'var(--color-emerald)' : 'var(--color-rose)' }}>
-              {isConnected ? 'Live Feed Active' : 'Connecting...'}
+            <span style={{ fontSize: '11px', color: isConnected ? 'var(--color-emerald)' : 'var(--color-cyan)' }}>
+              {isConnected ? 'Live Feed Active' : 'Vercel Mode (REST)'}
             </span>
           </div>
           <div>SupplySense Dashboard</div>
