@@ -103,7 +103,7 @@ async function getKPIs() {
   ]);
   const avgLeadTime = avgLeadTimeRaw[0] ? Math.round(avgLeadTimeRaw[0].avgLeadTime * 10) / 10 : 4.2;
 
-  cachedKPIs = {
+  const result = {
     totalSales: Math.round(stats.totalSales),
     totalProfit: Math.round(stats.totalProfit),
     orderCount: stats.totalCount,
@@ -116,8 +116,14 @@ async function getKPIs() {
     },
     averageLeadTime: avgLeadTime
   };
-  kpisLastUpdated = now;
-  return cachedKPIs;
+
+  // Only cache if database actually returned records
+  if (stats.totalCount > 0) {
+    cachedKPIs = result;
+    kpisLastUpdated = now;
+  }
+
+  return result;
 }
 
 // 1. KPIs endpoint
