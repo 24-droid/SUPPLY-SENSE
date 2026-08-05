@@ -20,7 +20,7 @@ ChartJS.register(
   Legend
 );
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
 
 export default function LogisticsTab({ liveOrders = [], isConnected = false }) {
   const [logisticsData, setLogisticsData] = useState(null);
