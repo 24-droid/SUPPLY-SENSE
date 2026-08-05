@@ -21,10 +21,10 @@ const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/supply_chain_db';
 
-// Initialize Socket.io with CORS for the Vite dev server
+// Initialize Socket.io with open CORS for cross-origin production deployments (Render -> Vercel)
 const io = new Server(httpServer, {
   cors: {
-    origin: ['http://localhost:5173', 'http://localhost:5174'],
+    origin: '*',
     methods: ['GET', 'POST']
   }
 });
