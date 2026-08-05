@@ -21,7 +21,14 @@ export function useSocket() {
   });
 
   useEffect(() => {
-    // Create Socket.io connection with polling fallback for serverless environments
+    // Skip socket connection on Vercel Serverless (where 24/7 WebSocket process is unavailable)
+    const isVercelServerless = SOCKET_URL.includes('vercel.app');
+    if (isVercelServerless) {
+      console.log('SupplySense: Operating in Vercel REST Mode (WebSockets disabled on serverless backend).');
+      return;
+    }
+
+    // Create Socket.io connection for persistent servers (localhost / Render / Railway)
     const socket = io(SOCKET_URL, {
       transports: ['polling', 'websocket'],
       reconnection: true,
