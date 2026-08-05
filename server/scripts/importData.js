@@ -14,7 +14,7 @@ dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const { Product, Order, SalesHistory } = require('../models');
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://omsingh06102005_db_user:K1hzhHj513XYPLqC@cluster0.dadeuan.mongodb.net/';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/supply_chain_db';
 const CSV_FILE_PATH = path.join(__dirname, '../data/DataCoSupplyChainDataset.csv');
 
 async function main() {
