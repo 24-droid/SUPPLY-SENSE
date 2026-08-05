@@ -21,12 +21,13 @@ export function useSocket() {
   });
 
   useEffect(() => {
-    // Create Socket.io connection
+    // Create Socket.io connection with polling fallback for serverless environments
     const socket = io(SOCKET_URL, {
-      transports: ['websocket'],
+      transports: ['polling', 'websocket'],
       reconnection: true,
-      reconnectionDelay: 2000,
-      reconnectionAttempts: 5
+      reconnectionDelay: 5000,
+      reconnectionAttempts: 3,
+      timeout: 10000
     });
     socketRef.current = socket;
 
@@ -35,8 +36,13 @@ export function useSocket() {
       setIsConnected(true);
     });
 
+    socket.on('connect_error', (err) => {
+      // Gracefully handle serverless environments where persistent sockets are restricted
+      setIsConnected(false);
+      socket.disconnect(); // Stop continuous console error logs
+    });
+
     socket.on('disconnect', () => {
-      console.log('Socket.io disconnected');
       setIsConnected(false);
     });
 
