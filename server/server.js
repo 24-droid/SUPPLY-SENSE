@@ -53,6 +53,15 @@ app.use(async (req, res, next) => {
   next();
 });
 
+// Root & Health Check endpoints
+app.get('/', (req, res) => {
+  res.json({ message: 'SupplySense API Server is running live!', status: 'online' });
+});
+
+app.get('/api', (req, res) => {
+  res.json({ message: 'SupplySense API endpoint active.', endpoints: ['/api/kpis', '/api/inventory', '/api/forecast', '/api/shipments', '/api/chatbot'] });
+});
+
 // KPI Caching
 let cachedKPIs = null;
 let kpisLastUpdated = null;
