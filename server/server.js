@@ -29,16 +29,29 @@ const io = new Server(httpServer, {
   }
 });
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
-// Connect to MongoDB, then start the live simulation engine
-mongoose.connect(MONGO_URI)
-  .then(() => {
+// Serverless-friendly MongoDB Connection Caching
+let isDbConnected = false;
+async function connectDB() {
+  if (isDbConnected && mongoose.connection.readyState === 1) return;
+  try {
+    await mongoose.connect(MONGO_URI);
+    isDbConnected = true;
     console.log('Connected to MongoDB database.');
+    // Start live simulation engine if socket.io server is listening
     startLiveEngine(io, Product);
-  })
-  .catch(err => console.error('MongoDB database connection error:', err));
+  } catch (err) {
+    console.error('MongoDB database connection error:', err);
+  }
+}
+
+// Middleware to ensure DB connection on every request
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 
 // KPI Caching
 let cachedKPIs = null;
@@ -336,7 +349,12 @@ app.post('/api/chatbot', async (req, res) => {
   }
 });
 
-// Start HTTP Server (wraps Express + Socket.io on same port)
-httpServer.listen(PORT, () => {
-  console.log(`Express + Socket.io Server running on port ${PORT}`);
-});
+// Start HTTP Server when running standalone / locally
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  httpServer.listen(PORT, () => {
+    console.log(`Express + Socket.io Server running on port ${PORT}`);
+  });
+}
+
+// Export Express app for Vercel Serverless Functions
+module.exports = app;
