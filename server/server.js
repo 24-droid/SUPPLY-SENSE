@@ -63,7 +63,7 @@ app.get('/api', (req, res) => {
 });
 
 // Render Free Tier Keep-Alive Ping (Prevents server from going to sleep)
-const RENDER_URL = process.env.RENDER_EXTERNAL_URL || process.env.SERVER_URL || 'https://supply-sense.onrender.com';
+const RENDER_URL = process.env.RENDER_EXTERNAL_URL || process.env.SERVER_URL;
 if (RENDER_URL) {
   const PING_INTERVAL_MS = 14 * 60 * 1000; // Ping every 14 minutes (Render sleeps at 15 mins)
   setInterval(() => {

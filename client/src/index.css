@@ -408,6 +408,12 @@ select, input[type="text"] {
   transition: var(--transition-smooth);
 }
 
+select option {
+  background-color: #0f172a;
+  color: #f8fafc;
+  padding: 8px 12px;
+}
+
 select:focus, input[type="text"]:focus {
   border-color: var(--color-cyan);
   box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
